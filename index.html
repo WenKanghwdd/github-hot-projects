@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub 热门项目雷达</title>
+  <link rel="preconnect" href="https://api.github.com" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="background-grid" aria-hidden="true"></div>
+  <div class="scanline" aria-hidden="true"></div>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">GITHUB TRENDING INTELLIGENCE / REALTIME</p>
+        <h1 id="page-title">开源项目热度雷达</h1>
+        <p class="lead">实时从 GitHub Search API 提取今日、本周、本月新晋热门项目，按 Star 排序，并把详情整理为中文摘要、上手建议与项目概览。</p>
+      </div>
+      <aside class="signal-card" aria-label="数据状态">
+        <span class="pulse"></span>
+        <strong id="statusTitle">等待同步</strong>
+        <p id="statusText">选择时间窗口后自动拉取最新仓库数据。</p>
+      </aside>
+    </section>
+
+    <section class="control-panel" aria-label="筛选控制">
+      <div class="tabs" role="tablist" aria-label="热门时间范围">
+        <button class="tab active" data-range="day" role="tab" aria-selected="true">今日</button>
+        <button class="tab" data-range="week" role="tab" aria-selected="false">本周</button>
+        <button class="tab" data-range="month" role="tab" aria-selected="false">本月</button>
+      </div>
+      <label class="search-box">
+        <span>语言过滤</span>
+        <select id="languageSelect" aria-label="选择编程语言">
+          <option value="">全部语言</option>
+          <option>JavaScript</option>
+          <option>TypeScript</option>
+          <option>Python</option>
+          <option>Go</option>
+          <option>Rust</option>
+          <option>Java</option>
+          <option>C++</option>
+          <option>Swift</option>
+          <option>Kotlin</option>
+          <option>PHP</option>
+        </select>
+      </label>
+      <button id="refreshBtn" class="refresh-button">重新扫描</button>
+    </section>
+
+    <section class="metrics" aria-label="热度指标">
+      <article><span id="metricCount">--</span><p>候选项目</p></article>
+      <article><span id="metricStars">--</span><p>最高 Stars</p></article>
+      <article><span id="metricLang">--</span><p>主流语言</p></article>
+    </section>
+
+    <section id="repoGrid" class="repo-grid" aria-live="polite"></section>
+  </main>
+
+  <aside id="detailDrawer" class="drawer" aria-hidden="true" aria-labelledby="drawerTitle">
+    <div class="drawer-backdrop" data-close></div>
+    <article class="drawer-panel" role="dialog" aria-modal="true">
+      <button class="close-button" data-close aria-label="关闭详情">×</button>
+      <div id="drawerContent"></div>
+    </article>
+  </aside>
+
+  <template id="skeletonTemplate">
+    <article class="repo-card skeleton">
+      <div class="skeleton-line wide"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line short"></div>
+    </article>
+  </template>
+
+  <script src="./app.js"></script>
+</body>
+</html>
